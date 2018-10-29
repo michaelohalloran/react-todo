@@ -59,7 +59,7 @@ class App extends Component {
 
   // handleDelete = (e)=> {
   handleDelete = (removeIndex)=> {
-    console.log('removeIndex: ', removeIndex);
+    // console.log('removeIndex: ', removeIndex);
     const {todos} = this.state;
     const newTodos = todos.filter((todo,idx)=>todos[idx] !== todos[removeIndex]);
     this.setState(state=>({
