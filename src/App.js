@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import List from './List';
-import Button from './Button';
-import Input from './Input';
+import TodoList from './TodoList';
 import SearchResults from './SearchResults';
+import AddTodoForm from './AddTodoForm';
+import SearchForm from './SearchForm';
 
-//input or Search component
 //button to add todo (Button component)
 //search input (filtering) (another Search component?)
 //trash/delete btn created next to each todo (List and Item components)
@@ -17,6 +16,7 @@ class App extends Component {
     this.state = {
       todos: [],
       value: '',
+      todoErrorMsg: '',
       searchText: '',
       searchResults: []
     };
@@ -24,12 +24,17 @@ class App extends Component {
   }
 
   handleSubmit = (e)=> {
-    this.setState({
-      todos: [...this.state.todos, this.state.value],
-      value: '',
-    });
     e.preventDefault();
-
+    //disable submission of duplicates, if todos already contains this value
+    if(this.state.todos.includes(this.state.value)) {
+      this.setState({todoErrorMsg: 'You already added that todo'});
+    } else {
+      this.setState({
+        todos: [...this.state.todos, this.state.value],
+        value: '',
+        todoErrorMsg: ''
+      });
+    }
   }
 
   handleChange = e => {
@@ -52,21 +57,27 @@ class App extends Component {
     });
   }
 
-  handleDelete = (e)=> {
-    e.preventDefault();
-    console.log('hit delete event: ', e);
-    console.log('currentTarget: ', e.currentTarget);
-    console.log('currentTarget children: ', e.currentTarget.children[0]);
-    console.log('currentTarget child text: ', e.currentTarget.children[0].innerHTML);
-    console.log('e target: ', e.target);
-    console.log('parent of target: ', e.target.value);
-    console.log('parent of currentTarget: ', e.currentTarget.value);
-    const newResults = this.state.todos.filter(todo=> todo !== e.currentTarget.children[0].innerHTML);
-    this.setState({
-      todos: newResults
-    });
-
-
+  // handleDelete = (e)=> {
+  handleDelete = (removeIndex)=> {
+    console.log('removeIndex: ', removeIndex);
+    const {todos} = this.state;
+    const newTodos = todos.filter((todo,idx)=>todos[idx] !== todos[removeIndex]);
+    this.setState(state=>({
+      todos: newTodos
+    }));
+    // e.preventDefault();
+    // console.log('hit delete event: ', e);
+    // console.log('currentTarget: ', e.currentTarget);
+    // console.log('currentTarget children: ', e.currentTarget.children[0]);
+    // console.log('currentTarget child text: ', e.currentTarget.children[0].innerHTML);
+    // console.log('e target: ', e.target);
+    // console.log('parent of target: ', e.target.value);
+    // console.log('parent of currentTarget: ', e.currentTarget.value);
+    //remove deleted todo
+    // const newTodos = this.state.todos.filter(todo=> todo !== e.currentTarget.children[0].innerHTML);
+    // this.setState({
+    //   todos: newTodos
+    // });
   }
 
   // handleSearch = e=> {
@@ -80,37 +91,31 @@ class App extends Component {
   
   render() {
 
-    const {searchResults} = this.state;
+    const {searchResults, searchText, value, todoErrorMsg} = this.state;
 
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-            <Input 
-              name="todos"
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-          <Button value="Submit"/>
-            <br />
-            <br />
-        </form>
-
-        {/* <form name="searchResults" onSubmit={this.handleSearch}> */}
-        <Input 
-              // name="searchResults"
-              name="searchText"
-              value={this.state.searchText}
-              onChange={this.filterItems}
-            />
-          {/* <Button value="Search"/> */}
-        {/* </form> */}
         
-        <List 
-          todos={this.state.todos} 
-          onDeleteClick={this.handleDelete}
+        <AddTodoForm 
+          onSubmit={this.handleSubmit}
+          onChange={this.handleChange}
+          value={value}
         />
 
-        <SearchResults input={searchResults}/>
+        <SearchForm 
+          name="searchText"
+          onSearch={this.filterItems}
+          searchText={searchText}
+          value={value}
+        />
+        
+        <TodoList 
+          todos={this.state.todos} 
+          onDeleteClick={this.handleDelete}
+          msg={todoErrorMsg}
+        />
+
+        <SearchResults searchResults={searchResults}/>
 
       </div>
     );

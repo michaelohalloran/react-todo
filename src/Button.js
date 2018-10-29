@@ -1,8 +1,10 @@
 import React from 'react';
 
-const Button = ({value, onClick}) => {
+const Button = (props) => {
+    const {value, index} = props;
     return (
-        <button onClick={onClick}>{value}</button>
+        // <button onClick={()=>props.onClick? props.onClick(index) : console.log('no onC')}>{value}</button>
+        <button>{value}</button>
     );
 }
 export default Button;

@@ -1,11 +1,12 @@
 import React from 'react';
 
-const SearchResults = ({input})=> {
+const SearchResults = ({searchResults})=> {
 
-    const results = input.map(term=><li>{term}</li>);
+    const results = searchResults.map((term,i)=><li key={i}>{term}</li>);
 
     return (
         <ul className="search-results">
+            <h3>Search Results:</h3>
             {results}
         </ul>
     );

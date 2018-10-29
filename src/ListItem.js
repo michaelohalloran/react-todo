@@ -1,12 +1,17 @@
 import React from 'react';
+// import Button from './Button';
 
 const ListItem = props => {
-    const {id, text} = props;
+    const {index, text, onDeleteClick} = props;
     return (
-        <div className="list-item">
-            {/* ListItem {id+1}: {text} */}
+        <li>
             {text}
-        </div>
+            {/* this logs the index: */}
+            <button index={index} value="Delete" onClick={()=>onDeleteClick(index)}>Del</button>
+            
+            {/* <Button index={index} value="Delete" onClick={onDeleteClick}/> */}
+        </li>
+
     );
 }
 export default ListItem;
