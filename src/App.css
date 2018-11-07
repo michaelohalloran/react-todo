@@ -23,7 +23,7 @@ button:hover {
     display: inline-block;
 }
 
-.search-results {
+.search-results, .todo-list {
     list-style: none;
 }
 

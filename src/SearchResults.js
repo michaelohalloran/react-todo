@@ -2,7 +2,8 @@ import React from 'react';
 
 const SearchResults = ({searchResults})=> {
 
-    const results = searchResults.map((term,i)=><li key={i}>{term}</li>);
+    //searchResults is a todo object; display just the search term's text
+    const results = searchResults.map((term,i)=><li key={i}>{term.text}</li>);
 
     return (
         <ul className="search-results">
