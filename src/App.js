@@ -86,7 +86,9 @@ class App extends Component {
     editedTodos[editIndex] = singleTodo;
 
     this.setState({
-      todos: editedTodos
+      todos: editedTodos,
+      //this will be used as the input value and placeholder (so user can start typing from what the todo already says)
+      updatingTodoText: singleTodo.text
     });
   }
 
@@ -100,52 +102,27 @@ class App extends Component {
     console.log('singleTodo is :', singleTodo);
     console.log('updatedTodos are :', updatedTodos);
 
-    this.setState({todos: updatedTodos});
-
-    
-    //NOT WORKING, updating all todos to be same text
-    //set editing status to false, add updatedTodo to todos array
-    // const updatedTodos = todos.map((todo, idx)=> {
-    //   if(idx = this.state.updatingTodoIdx) {
-    //     todo = updatingTodo;
-    //   }
-    //   return todo;
-    // });
-
-    //******************** */
-    //alternative: find index of updatingTodo
-    // const updatedTodo = todos.find(todo=>todos[this.state.updatingTodoIdx] = this.state.updatingTodo);
-
-    // this.setState({
-    //   // todos: updatedTodos
-    //   todos: [...todos, updatedTodo]
-    // });
+    this.setState({todos: updatedTodos, updatingTodoText: ''});
   }
 
   handleChangeTodo = (e, idx)=> {
-    // console.log('handleChange index :', e.target.value, idx);
+    console.log('handleChange e.target.value:', e.target.value);
+    console.log('handleChange todo text:', this.state.todos[idx].text);
+
     this.setState({
       updatingTodoText: e.target.value,
       updatingTodoIdx: idx
     });
   }
-
-  // handleSearch = e=> {
-  //   e.preventDefault();
-  //   const name = e.target.name;
-  //   this.setState({
-  //     [name]: [...this.state[name], this.state.searchText],
-  //     searchText: ''
-  //   });
-  // }
   
   render() {
 
-    const {searchResults, searchText, value, todoErrorMsg, editing} = this.state;
+    const {searchResults, searchText, value, todoErrorMsg, editing, updatingTodoText} = this.state;
 
     return (
       <div>
-        
+        <h1 className="title">Todo List</h1>
+
         <AddTodoForm 
           onSubmit={this.handleSubmit}
           onChange={this.handleChange}
@@ -167,6 +144,7 @@ class App extends Component {
           msg={todoErrorMsg}
           updateTodo={this.updateTodo}
           handleChangeTodo={this.handleChangeTodo}
+          updatingTodoText={updatingTodoText}
         />
 
         <SearchResults searchResults={searchResults}/>

@@ -3,7 +3,7 @@ import ListItem from './ListItem';
 
 
 const TodoList = props => {
-    const {todos, onDeleteClick,onEditClick, msg, updateTodo, handleChangeTodo} = props;
+    const {todos, onDeleteClick,onEditClick, msg, updateTodo, handleChangeTodo, updatingTodoText} = props;
     const items = todos.map((todo,index)=> (
         <ListItem 
             key={index} 
@@ -15,6 +15,7 @@ const TodoList = props => {
             text={todo.text}
             updateTodo={updateTodo} 
             handleChangeTodo={handleChangeTodo}
+            updatingTodoText={updatingTodoText}
         />
     ));
     

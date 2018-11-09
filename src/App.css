@@ -1,7 +1,12 @@
 body {
     text-align: center;
     /* background-color: #e15f41; */
-    background: linear-gradient(to right,#3dc1d3, #546de5,#786fa6);
+    /* BLUE/GREEN: */
+    /* background: linear-gradient(to right,#3dc1d3, #546de5,#786fa6); */
+    
+    /* FRENCH PALETTE, melon, squash, etc.: */
+    background: linear-gradient(to right,#fad390, #f8c291,#f6b93b, #fa983a);
+    
     /* background: linear-gradient(to right, #e15f41,#f5cd79, #546de5,#786fa6); */
     /* background-repeat: no-repeat; */
     /* background: linear-gradient(to right, red,orange, yellow, green); */
@@ -10,17 +15,55 @@ body {
 
 } 
 
+:root {
+    --blue: rgba(106, 137, 204,1.0);
+    --header-pos: 4% auto;
+    --header-padding: 2%;
+}
+
+.title {
+    border: 1px solid black;
+    margin: var(--header-pos);
+    width: 80vw;
+    color: white;
+    background-color: var(--blue);
+    padding: var(--header-padding);
+}
+
+.search-header {
+    font-size: 3rem;
+    margin: var(--header-pos);
+    color: white;
+    background-color: var(--blue);
+    padding: var(--header-padding);
+    width: 50vw;
+}
+
 button, input {
     margin: 1%;
-    padding: 1%;
+    padding: 2%;
+    font-size: 2rem;
+}
+
+button {
+    cursor: pointer;
+    color: white;
+    background-color: var(--blue);
+    border-radius: 5%;
 }
 
 button:hover {
-    background: red;
+    background: white;
+    color: rgba(106, 137, 204,1.0);
 }
 
 .list-item {
-    display: inline-block;
+    margin: 2% auto;
+}
+
+.list-text {
+    color: white;
+    font-size: 2.5rem;
 }
 
 .search-results, .todo-list {
